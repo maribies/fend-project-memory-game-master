@@ -24,8 +24,12 @@ function makeCard(card){
                         + '</i>';
     let deck = document.getElementById('deck');
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
-  }
-//return `<li class="card"><i class="fa ${cards}"></i></li>;`
+    }
+      for (var i=0; i <cards.length; i++){
+        let deck = document.getElementById('deck');
+        let target = deck.getElementsByTagName('i');
+        target[i].className += ' ' + cards[i];
+      }
 };
 
 // Shuffle function from http://stackoverflow.com/a/2450976
