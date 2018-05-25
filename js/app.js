@@ -51,9 +51,12 @@ function shuffle(array) {
          card.classList.add('open','show');
 
          //check cards match
-         console.log(openCards);
-        if (openCards[0].innerHTML === openCards[1].innerHTML){
-          console.log("its a match");
+
+        const firstCard = openCards[0];
+        const secondCard = openCards[1];
+        if (firstCard.innerHTML === secondCard.innerHTML){
+          firstCard.classList.add('match');
+          secondCard.classList.add('match');
         };
          //if cards don't match, go away
        } if (openCards.length == 2){
