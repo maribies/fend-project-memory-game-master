@@ -18,15 +18,14 @@ const cards = ['fa-diamond', 'fa-diamond',
  *   - add each card's HTML to the page
 */
 function makeCard(card){
-  let cardTemplate = '<li class="card">'
-                      + '<i class="fa"></i>'
-                      + '</i>';
-  let deck = document.getElementbyId('deck');
-  deck.insertAdjacentHTML(afterbegin, cardTemplate);
-    for (var i=0; i <= cards.length; i++) {
-    cardTemplate.getElementsByClassName("fa")[i].classList += cards[i%len];
-    }
-//return `<li class="card"><i class="fa ${card}"></i></li>;`
+  for (var x=0; x<cards.length; x++){
+    let cardTemplate = '<li class="card">'
+                        + '<i class="fa"></i>'
+                        + '</i>';
+    let deck = document.getElementById('deck');
+    deck.insertAdjacentHTML('afterbegin', cardTemplate);
+  }
+//return `<li class="card"><i class="fa ${cards}"></i></li>;`
 };
 
 // Shuffle function from http://stackoverflow.com/a/2450976
