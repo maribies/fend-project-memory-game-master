@@ -50,6 +50,12 @@ function shuffle(array) {
          openCards.push(card);
          card.classList.add('open','show');
 
+         //check cards match
+         console.log(openCards);
+        if (openCards[0].innerHTML === openCards[1].innerHTML){
+          console.log("its a match");
+        };
+         //if cards don't match, go away
        } if (openCards.length == 2){
          setTimeout(function(){
            openCards.forEach(function(card){
