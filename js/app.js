@@ -1,7 +1,15 @@
 /*
  * Create a list that holds all of your cards
  */
-
+let cards = ['fa-diamond', 'fa-diamond',
+                'fa-paper-plane-o', 'fa-paper-plane-o',
+                'fa-bolt','fa-bolt',
+                'fa-cube', 'fa-cube'
+                'fa-anchor', 'fa-anchor',
+                'fa-leaf', 'fa-leaf',
+                'fa-bicycle', 'fa-bicycle',
+                'fa-bomb', 'fa-bomb'
+              ];
 
 /*
  * Display the cards on the page
@@ -9,6 +17,9 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+function makeCard(card){
+return = `<li class="card"><i class="fa ${card}"></i></li>;`
+};
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,7 +47,9 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+function beginGame(){
 
+}
 
  let allCards = document.querySelectorAll('.card');
  let openCards = []; //to store open cards, can use .length to get num of cards
@@ -51,14 +64,15 @@ function shuffle(array) {
          card.classList.add('open','show');
 
          //check cards match
-
         const firstCard = openCards[0];
         const secondCard = openCards[1];
         if (firstCard.innerHTML === secondCard.innerHTML){
           firstCard.classList.add('match');
           secondCard.classList.add('match');
         };
-         //if cards don't match, go away
+        //resulting in undefined error
+
+         //if cards don't match, flip
        } if (openCards.length == 2){
          setTimeout(function(){
            openCards.forEach(function(card){
