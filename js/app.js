@@ -39,14 +39,21 @@ function shuffle(array) {
 
 
  let allCards = document.querySelectorAll('.card');
- let openCards = []; //to store open cards, can use .lenght to get num of cards
+ let openCards = []; //to store open cards, can use .length to get num of cards
 
-//flips cards
+//flips cards, hides cards after delay
  allCards.forEach(function(card){
    card.addEventListener('click', function(e){
      if (openCards.length < 2) {
        openCards.push(card);
        card.classList.add('open','show');
+     } if (openCards.length == 2){
+       setTimeout(function(){
+         openCards.forEach(function(card){
+           card.classList.remove('open', 'show');
+         });
+         openCards = [];
+       }, 1000);
      }
-   })
+   });
  });
