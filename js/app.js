@@ -25,12 +25,15 @@ function makeCard(card){
     let deck = document.getElementById('deck');
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
     }
+    shuffle(cards);
       for (var i=0; i <cards.length; i++){
         let deck = document.getElementById('deck');
         let target = deck.getElementsByTagName('i');
         target[i].className += ' ' + cards[i];
       }
 };
+
+makeCard();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -58,9 +61,7 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-function beginGame(){
 
-}
 
  let allCards = document.querySelectorAll('.card');
  let openCards = []; //to store open cards, can use .length to get num of cards
