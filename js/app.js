@@ -71,6 +71,7 @@ function shuffle(array) {
    card.addEventListener('click', function(e){
      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
 
+      //flip to show cards clicked
        if (openCards.length < 2) {
          openCards.push(card);
          card.classList.add('open','show');
@@ -82,9 +83,8 @@ function shuffle(array) {
           firstCard.classList.add('match');
           secondCard.classList.add('match');
         };
-        //resulting in undefined error
 
-         //if cards don't match, flip
+         //if cards don't match, flip/hide
        } if (openCards.length == 2){
          setTimeout(function(){
            openCards.forEach(function(card){
@@ -97,3 +97,10 @@ function shuffle(array) {
      }
    });
  });
+
+ //if refresh icon is clicked, refresh the page
+ let refreshBtn = document.getElementById('restart');
+ function refresh(){
+   location.reload(true);
+ }
+ refreshBtn.addEventListener('click', refresh,false);
