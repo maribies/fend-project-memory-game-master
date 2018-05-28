@@ -10,13 +10,14 @@ const cards = ['fa-diamond', 'fa-diamond',
                 'fa-bicycle', 'fa-bicycle',
                 'fa-bomb', 'fa-bomb'
               ];
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
 */
+const deck = document.getElementById('deck');
+
 function makeCard(card){
   for (var x=0; x<cards.length; x++){
     let cardTemplate = '<li class="card">'
@@ -49,8 +50,6 @@ function shuffle(array) {
 
     return array;
 }
-
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -61,8 +60,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
-
  let allCards = document.querySelectorAll('.card');
  let openCards = []; //to store open cards, can use .length to get num of cards
 
@@ -103,4 +100,21 @@ function shuffle(array) {
  function refresh(){
    location.reload(true);
  }
- refreshBtn.addEventListener('click', refresh,false);
+ refreshBtn.addEventListener('click', refresh, false);
+
+//timer pops up on start to show how long player takes to play/win Game
+let startTime = new Date().getTime();
+let counter = '0';
+let timer = document.getElementById('timer');
+function myTimer(){
+  var time = new Date().getTime() - startTime;
+  counter = Math.floor(time/100)/10;
+  if (Math.round(counter) == counter) {
+    counter += '.0';
+    }
+    timer.innerHTML = Math.round(counter);
+};
+setInterval(myTimer, 1000);
+deck.addEventListener('click', myTimer);
+//counter to keep display current number of moves user makes
+//star rating to reflect players performance
