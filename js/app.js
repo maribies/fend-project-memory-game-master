@@ -60,11 +60,11 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
- let allCards = document.querySelectorAll('.card');
+ const allCards = document.querySelectorAll('.card');
  let openCards = []; //to store open cards, can use .length to get num of cards
-
+ let countMatches = 0;
 //flips cards, hides cards after delay, will not allow clicking on same card
- allCards.forEach(function(card){
+ allCards.forEach(function cardGame(card){
    card.addEventListener('click', function(e){
      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
 
@@ -79,8 +79,9 @@ function shuffle(array) {
         if (openCards.length == 2 && firstCard.innerHTML === secondCard.innerHTML){
           firstCard.classList.add('match');
           secondCard.classList.add('match');
+          countMatches += 2;
         };
-
+        console.log(countMatches);
          //if cards don't match, flip/hide
        } if (openCards.length == 2){
          setTimeout(function(){
@@ -92,8 +93,10 @@ function shuffle(array) {
          }, 500);
        }
      }
+     win();
    });
  });
+
 
  //if refresh icon is clicked, refresh the page
  let refreshBtn = document.getElementById('restart');
@@ -102,19 +105,38 @@ function shuffle(array) {
  }
  refreshBtn.addEventListener('click', refresh, false);
 
-//timer pops up on start to show how long player takes to play/win Game
-let startTime = new Date().getTime();
+/*
+* timer pops up on start to show how long player takes to play/win Game
+* - adapted from "Creating Accurate Timers in Javascript" by James Edwards
+* - https://www.sitepoint.com/creating-accurate-timers-in-javascript/
+*/
+ startTime = new Date().getTime();
 let counter = '0';
 let timer = document.getElementById('timer');
+
+deck.addEventListener('click', myTimer)
+
 function myTimer(){
-  var time = new Date().getTime() - startTime;
-  counter = Math.floor(time/100)/10;
-  if (Math.round(counter) == counter) {
-    counter += '.0';
-    }
+    var time = new Date().getTime() - startTime;
+    counter = Math.floor(time/100)/10;
+    if (Math.round(counter) == counter) {
+      counter += '.0';
+      }
     timer.innerHTML = Math.round(counter);
+    timerGo = setInterval(myTimer, 1000);
 };
-setInterval(myTimer, 1000);
-deck.addEventListener('click', myTimer);
+//if all matched
+function stopMyTimer() {
+  clearInterval(timerGo);
+};
+
+//function to determine if player matches all cards = win = popup
+function win(){
+  if (countMatches === cards.length){
+    alert('win');
+  }
+};
+
 //counter to keep display current number of moves user makes
+//deck.addEventListener('click', function moveCounter(e){});
 //star rating to reflect players performance
