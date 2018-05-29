@@ -110,20 +110,22 @@ function shuffle(array) {
 * - adapted from "Creating Accurate Timers in Javascript" by James Edwards
 * - https://www.sitepoint.com/creating-accurate-timers-in-javascript/
 */
- startTime = new Date().getTime();
+startTime = new Date().getTime();
 let counter = '0';
 let timer = document.getElementById('timer');
 
 deck.addEventListener('click', myTimer)
 
 function myTimer(){
-    var time = new Date().getTime() - startTime;
+  if(countMatches !== cards.length){
+    let time = new Date().getTime() - startTime;
     counter = Math.floor(time/100)/10;
     if (Math.round(counter) == counter) {
       counter += '.0';
       }
     timer.innerHTML = Math.round(counter);
-    timerGo = setInterval(myTimer, 1000);
+    let timerGo = setInterval(myTimer, 1000);
+  };
 };
 //if all matched
 function stopMyTimer() {
