@@ -70,7 +70,7 @@ function shuffle(array) {
      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
       //counter for each time player clicks a card
       countClicks +=1;
-      console.log(countClicks);
+      //console.log(countClicks);
 
       //flip to show cards clicked
        if (openCards.length < 2) {
@@ -96,13 +96,14 @@ function shuffle(array) {
            openCards = [];
          }, 500);
        }
+       starRating();
      }
     win();
    });
  });
 
 
- //if refresh icon is clicked, refresh the page
+ //if refresh icon is clicked, refresh the page --- is this the same as reset?
  let refreshBtn = document.getElementById('restart');
  function refresh(){
    location.reload(true);
@@ -151,5 +152,12 @@ deck.addEventListener('click', function moveCounter(e){
   }
 });
 
-
 //star rating to reflect players performance
+let allStars = document.querySelector('.stars');
+let star = allStars.getElementsByTagName('li');
+function starRating(){
+  //if counter is under 32 moves, 2 stars, more than 42, 1 star
+  if (countClicks == 32 || countClicks == 42) {
+    star[0].remove();
+  };
+};
