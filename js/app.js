@@ -63,10 +63,14 @@ function shuffle(array) {
  const allCards = document.querySelectorAll('.card');
  let openCards = []; //to store open cards, can use .length to get num of cards
  let countMatches = 0;
+ let countClicks = 0;
 //flips cards, hides cards after delay, will not allow clicking on same card
  allCards.forEach(function cardGame(card){
    card.addEventListener('click', function(e){
      if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
+      //counter for each time player clicks a card
+      countClicks +=1;
+      console.log(countClicks);
 
       //flip to show cards clicked
        if (openCards.length < 2) {
@@ -81,7 +85,7 @@ function shuffle(array) {
           secondCard.classList.add('match');
           countMatches += 2;
         };
-        console.log(countMatches);
+        //console.log(countMatches);
          //if cards don't match, flip/hide
        } if (openCards.length == 2){
          setTimeout(function(){
@@ -93,7 +97,7 @@ function shuffle(array) {
          }, 500);
        }
      }
-     win();
+    win();
    });
  });
 
@@ -111,23 +115,23 @@ function shuffle(array) {
 * - https://www.sitepoint.com/creating-accurate-timers-in-javascript/
 */
 startTime = new Date().getTime();
-let counter = '0';
+let timeCounter = '0';
 let timer = document.getElementById('timer');
 
-deck.addEventListener('click', myTimer)
+deck.addEventListener('click', myTimer);
 
 function myTimer(){
   if(countMatches !== cards.length){
     let time = new Date().getTime() - startTime;
-    counter = Math.floor(time/100)/10;
-    if (Math.round(counter) == counter) {
-      counter += '.0';
+    timeCounter = Math.floor(time/100)/10;
+    if (Math.round(timeCounter) == timeCounter) {
+      timeCounter += '.0';
       }
-    timer.innerHTML = Math.round(counter);
+    timer.innerHTML = Math.round(timeCounter);
     let timerGo = setInterval(myTimer, 1000);
   };
 };
-//if all matched
+//only runs if all matched
 function stopMyTimer() {
   clearInterval(timerGo);
 };
@@ -135,10 +139,17 @@ function stopMyTimer() {
 //function to determine if player matches all cards = win = popup
 function win(){
   if (countMatches === cards.length){
-    alert('win');
+    alert('You win!');
   }
 };
 
 //counter to keep display current number of moves user makes
-//deck.addEventListener('click', function moveCounter(e){});
+deck.addEventListener('click', function moveCounter(e){
+  let moveCounter = document.getElementById('moves');
+  if(countMatches !== cards.length){
+    moveCounter.textContent = countClicks;
+  }
+});
+
+
 //star rating to reflect players performance
