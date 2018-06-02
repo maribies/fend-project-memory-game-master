@@ -83,9 +83,8 @@ allCards.forEach(function cardGame(card){
         if (openCards.length == 2 && firstCard.innerHTML === secondCard.innerHTML){
           cardsMatch(card);
         };
-
         //if cards don't match, flip/hide
-        }if (openCards.length == 2){
+        } if (openCards.length == 2){
         cardsHide(card);
       }
       starRating();
@@ -155,7 +154,7 @@ function stopMyTimer() {
 //function to determine if player matches all cards = win = popup alert
 function win(){
   if (countMatches === cards.length){
-    alert('You win!' + 'You made ' + countClicks + ' moves. ' + 'In ' + + ' seconds.');
+    alert('You win!' + ' You made ' + countClicks + ' moves. ' + 'In ' + timeCounter + ' seconds.');
   }
 };
 
