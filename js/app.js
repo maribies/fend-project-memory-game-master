@@ -25,14 +25,14 @@ function makeCard(card){
                         + '</i>';
     let deck = document.getElementById('deck');
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
-    }
+  };
     shuffle(cards);
-      for (var i=0; i <cards.length; i++){
-        let deck = document.getElementById('deck');
-        let target = deck.getElementsByTagName('i');
-        target[i].className += ' ' + cards[i];
-      }
-};
+    for (var i=0; i <cards.length; i++){
+      let deck = document.getElementById('deck');
+      let target = deck.getElementsByTagName('i');
+      target[i].className += ' ' + cards[i];
+    };
+  };
 
 makeCard();
 
@@ -60,48 +60,63 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
- const allCards = document.querySelectorAll('.card');
- let openCards = []; //to store open cards, can use .length to get num of cards
- let countMatches = 0;
- let countClicks = 0;
+
+
+const allCards = document.querySelectorAll('.card');
+let openCards = []; //to store open cards, can use .length to get num of cards
+let countMatches = 0;
+let countClicks = 0;
 //flips cards, hides cards after delay, will not allow clicking on same card
- allCards.forEach(function cardGame(card){
-   card.addEventListener('click', function(e){
-     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
-      //counter for each time player clicks a card
+allCards.forEach(function cardGame(card){
+  card.addEventListener('click', function(e){
+    if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
+     //counter for each time player clicks a card
       countClicks +=1;
-      //console.log(countClicks);
+     //console.log(countClicks);
 
-      //flip to show cards clicked
-       if (openCards.length < 2) {
-         openCards.push(card);
-         card.classList.add('open','show');
-
-         //check cards match
+     //flip to show cards clicked
+      if (openCards.length < 2) {
+        cardsFlip(card);
+        //check cards match
         const firstCard = openCards[0];
         const secondCard = openCards[1];
         if (openCards.length == 2 && firstCard.innerHTML === secondCard.innerHTML){
-          firstCard.classList.add('match');
-          secondCard.classList.add('match');
-          countMatches += 2;
+          cardsMatch(card);
         };
-        //console.log(countMatches);
-         //if cards don't match, flip/hide
-       } if (openCards.length == 2){
-         setTimeout(function(){
-           openCards.forEach(function(card){
-             card.classList.remove('open', 'show');
-           });
 
-           openCards = [];
-         }, 500);
-       }
-       starRating();
-     }
-    win();
-   });
- });
+        //if cards don't match, flip/hide
+        }if (openCards.length == 2){
+        cardsHide(card);
+      }
+      starRating();
+    }
+   win();
+  });
+});
+//does this need to be 2 functions according to directions?
+function cardsFlip(card){
+  openCards.push(card);
+  card.classList.add('open','show');
+}
 
+function cardsMatch(card){
+  //don't like that i need to redefine these variables here- can it be avoided?
+  const firstCard = openCards[0];
+  const secondCard = openCards[1];
+  firstCard.classList.add('match');
+  secondCard.classList.add('match');
+  countMatches += 2;
+};
+
+function cardsHide(card){
+  setTimeout(function(){
+    openCards.forEach(function(card){
+      card.classList.remove('open', 'show');
+    });
+
+    openCards = [];
+  }, 500);
+};
 
  //if refresh icon is clicked, refresh the page --- is this the same as reset?
  let refreshBtn = document.getElementById('restart');
@@ -137,10 +152,10 @@ function stopMyTimer() {
   clearInterval(timerGo);
 };
 
-//function to determine if player matches all cards = win = popup
+//function to determine if player matches all cards = win = popup alert
 function win(){
   if (countMatches === cards.length){
-    alert('You win!');
+    alert('You win!' + 'You made ' + countClicks + ' moves. ' + 'In ' + + ' seconds.');
   }
 };
 
