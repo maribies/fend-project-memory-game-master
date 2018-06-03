@@ -158,7 +158,8 @@ function win(){
     deck.classList.add('overlay');
     let winMessage = '<div class="winning-message">' + '<h1> Congrats!</h1>' +
                       '<p> You win!' + ' You made ' + countClicks +
-                      ' moves in ' + timeCounter + ' seconds.</p>' +
+                      ' moves, with a rating of ' + starCount + ' stars ' +
+                      ' in ' + timeCounter + ' seconds.</p>' +
                       '<button type="button" onclick="refresh()"> Play Again?</button>'
                       + '</div>'
     container[0].insertAdjacentHTML('afterbegin', winMessage);
@@ -176,9 +177,11 @@ deck.addEventListener('click', function moveCounter(e){
 //star rating to reflect players performance
 let allStars = document.querySelector('.stars');
 let star = allStars.getElementsByTagName('li');
+let starCount = 3;
 function starRating(){
   //if counter is under 32 moves, 2 stars, more than 42, 1 star
   if (countClicks == 32 || countClicks == 42) {
     star[0].remove();
+    starCount --;
   };
 };
