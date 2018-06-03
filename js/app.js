@@ -25,7 +25,7 @@ function makeCard(card){
                         + '</li>';
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
   };
-    //shuffle(cards);
+    shuffle(cards);
     for (var i=0; i <cards.length; i++){
       let deck = document.getElementById('deck');
       let target = deck.getElementsByTagName('i');
@@ -62,7 +62,7 @@ function shuffle(array) {
 
 
 const allCards = document.querySelectorAll('.card');
-let openCards = []; //to store open cards, can use .length to get num of cards
+let openCards = []; //to store open cards
 let countMatches = 0;
 let countClicks = 0;
 //flips cards, hides cards after delay, will not allow clicking on same card
@@ -71,7 +71,6 @@ allCards.forEach(function cardGame(card){
     if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')){
      //counter for each time player clicks a card
       countClicks +=1;
-     //console.log(countClicks);
 
      //flip to show cards clicked
       if (openCards.length < 2) {
@@ -91,14 +90,15 @@ allCards.forEach(function cardGame(card){
    win();
   });
 });
-//does this need to be 2 functions according to directions?
+
+//Does this need to be 2 functions according to directions?
 function cardsFlip(card){
   openCards.push(card);
   card.classList.add('open','show');
 }
 
 function cardsMatch(card){
-  //don't like that i need to redefine these variables here- can it be avoided?
+  //don't like that I need to redefine these variables here- can it be avoided?
   const firstCard = openCards[0];
   const secondCard = openCards[1];
   firstCard.classList.add('match');
@@ -116,12 +116,23 @@ function cardsHide(card){
   }, 500);
 };
 
- //if refresh icon is clicked, refresh the page --- is this the same as reset?
- let refreshBtn = document.getElementById('restart');
- function refresh(){
-   location.reload(true);
- }
- refreshBtn.addEventListener('click', refresh, false);
+/*
+* if refresh icon is clicked, refresh the page --- is this the same as reset?
+* -- Is this the cheating and lazy way out?
+* If reset here means the cards just go back to the 'hiding' position, but don't
+* reshuffle to new positions, I think it gives the player a cheating advantage,
+* which shouldn't be allowed. But I do understand wanting to start over with a
+* fresh, new game, which is what the current functionality allows.
+* -- The requirements say that the board, timer, and star rating need to be reset,
+* but doesn't mention the move counter -- which I think should also reset esp bc
+* the rating is based on the move counter, so what's the point of resetting it
+* if the move counter is going to override it again?
+*/
+let refreshBtn = document.getElementById('restart');
+function refresh(){
+ location.reload(true);
+}
+refreshBtn.addEventListener('click', refresh, false);
 
 /*
 * timer pops up on start to show how long player takes to play/win Game
@@ -150,7 +161,7 @@ function stopMyTimer() {
   clearInterval(timerGo);
 };
 
-//function to determine if player matches all cards = win = popup alert
+//function to determine if player matches all cards = win & popup alert
 const container = document.getElementsByClassName('container');
 
 function win(){
@@ -178,6 +189,7 @@ deck.addEventListener('click', function moveCounter(e){
 let allStars = document.querySelector('.stars');
 let star = allStars.getElementsByTagName('li');
 let starCount = 3;
+
 function starRating(){
   //if counter is under 32 moves, 2 stars, more than 42, 1 star
   if (countClicks == 32 || countClicks == 42) {
