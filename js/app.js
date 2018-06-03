@@ -22,11 +22,10 @@ function makeCard(card){
   for (var x=0; x<cards.length; x++){
     let cardTemplate = '<li class="card">'
                         + '<i class="fa"></i>'
-                        + '</i>';
-    let deck = document.getElementById('deck');
+                        + '</li>';
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
   };
-    shuffle(cards);
+    //shuffle(cards);
     for (var i=0; i <cards.length; i++){
       let deck = document.getElementById('deck');
       let target = deck.getElementsByTagName('i');
@@ -152,9 +151,17 @@ function stopMyTimer() {
 };
 
 //function to determine if player matches all cards = win = popup alert
+const container = document.getElementsByClassName('container');
+
 function win(){
   if (countMatches === cards.length){
-    alert('You win!' + ' You made ' + countClicks + ' moves. ' + 'In ' + timeCounter + ' seconds.');
+    deck.classList.add('overlay');
+    let winMessage = '<div class="winning-message">' + '<h1> Congrats!</h1>' +
+                      '<p> You win!' + ' You made ' + countClicks +
+                      ' moves in ' + timeCounter + ' seconds.</p>' +
+                      '<button type="button" onclick="refresh()"> Play Again?</button>'
+                      + '</div>'
+    container[0].insertAdjacentHTML('afterbegin', winMessage);
   }
 };
 
