@@ -25,7 +25,7 @@ function makeCard(card){
                         + '</li>';
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
   };
-  //shuffle(cards);
+  shuffle(cards);
   for (var i=0; i <cards.length; i++){
     let deck = document.getElementById('deck');
     let target = deck.getElementsByTagName('i');
