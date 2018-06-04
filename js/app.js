@@ -25,29 +25,29 @@ function makeCard(card){
                         + '</li>';
     deck.insertAdjacentHTML('afterbegin', cardTemplate);
   };
-    shuffle(cards);
-    for (var i=0; i <cards.length; i++){
-      let deck = document.getElementById('deck');
-      let target = deck.getElementsByTagName('i');
-      target[i].className += ' ' + cards[i];
-    };
+  //shuffle(cards);
+  for (var i=0; i <cards.length; i++){
+    let deck = document.getElementById('deck');
+    let target = deck.getElementsByTagName('i');
+    target[i].className += ' ' + cards[i];
   };
+};
 
 makeCard();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  var currentIndex = array.length, temporaryValue, randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+  while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+  }
 
-    return array;
+  return array;
 }
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -79,7 +79,7 @@ allCards.forEach(function cardGame(card){
         const firstCard = openCards[0];
         const secondCard = openCards[1];
         if (openCards.length == 2 && firstCard.innerHTML === secondCard.innerHTML){
-          cardsMatch(card);
+          cardsMatch(firstCard, secondCard);
         };
         //if cards don't match, flip/hide
         } if (openCards.length == 2){
@@ -91,34 +91,35 @@ allCards.forEach(function cardGame(card){
   });
 });
 
-//Does this need to be 2 functions according to directions?
+//cardsFlip shows the icon on the card, calls cardsArray below
 function cardsFlip(card){
-  openCards.push(card);
+  cardsArray(card);
   card.classList.add('open','show');
-}
-
-function cardsMatch(card){
-  //don't like that I need to redefine these variables here- can it be avoided?
-  const firstCard = openCards[0];
-  const secondCard = openCards[1];
-  firstCard.classList.add('match');
-  secondCard.classList.add('match');
-  countMatches += 2;
 };
-
+//'list' of open cards
+function cardsArray(card){
+  openCards.push(card);
+};
+//checks to see if the cards in 'list' match, counts for win function
+function cardsMatch(pairOne, pairTwo){
+  pairOne.classList.add('match');
+  pairTwo.classList.add('match');
+  countMatches += 2;
+}
+//hides/flips cards back over if they don't match
 function cardsHide(card){
   setTimeout(function(){
     openCards.forEach(function(card){
       card.classList.remove('open', 'show');
     });
-
+    //emptys the 'list' if the cards don't match
     openCards = [];
   }, 500);
 };
 
 /*
 * if refresh icon is clicked, refresh the page --- is this the same as reset?
-* -- Is this the cheating and lazy way out?
+* -- Is this the lazy way out?
 * If reset here means the cards just go back to the 'hiding' position, but don't
 * reshuffle to new positions, I think it gives the player a cheating advantage,
 * which shouldn't be allowed. But I do understand wanting to start over with a
@@ -135,7 +136,7 @@ function refresh(){
 refreshBtn.addEventListener('click', refresh, false);
 
 /*
-* timer pops up on start to show how long player takes to play/win Game
+* Timer - pops up on start to show how long player takes to play/win Game
 * - adapted from "Creating Accurate Timers in Javascript" by James Edwards
 * - https://www.sitepoint.com/creating-accurate-timers-in-javascript/
 */
@@ -180,7 +181,7 @@ function win(){
 //counter to keep display current number of moves user makes
 deck.addEventListener('click', function moveCounter(e){
   let moveCounter = document.getElementById('moves');
-  if(countMatches !== cards.length){
+  if(countMatches !== cards.length+1){
     moveCounter.textContent = countClicks;
   }
 });
